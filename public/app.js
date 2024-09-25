@@ -19,7 +19,7 @@ function updateMap(lat, lon, city) {
 }
 
 // Function to display weather data
-function displayWeatherData(weatherData, forecastData) {
+function displayWeatherData(weatherData, forecastData, exchangeRateData) {
   const weatherResults = document.getElementById('weatherResults');
   
   weatherResults.innerHTML = '';
@@ -34,6 +34,7 @@ function displayWeatherData(weatherData, forecastData) {
     <p><strong>Humidity:</strong> ${weatherData.main.humidity}%</p>
     <p><strong>Wind Speed:</strong> ${weatherData.wind.speed} m/s</p>
     <p><strong>Forecast:</strong> ${forecastData.description}</p>
+    <p><strong>Currancy USD/KZT:</strong> ${exchangeRateData.conversion_rate}</p>
   `;
   
   weatherResults.appendChild(entry);
@@ -42,13 +43,19 @@ function displayWeatherData(weatherData, forecastData) {
 
 // Function to fetch current weather data
 async function fetchCurrentWeather(city) {
-  const response = await fetch(`/weather?city=${encodeURIComponent(city)}`);
+  const response = await fetch(`/weather?city=${city}`);
   return response.json();
 }
 
 // Function to fetch weather history data
 async function fetchWeatherForecast(city) {
   const response = await fetch(`/weather-forecast?city=${encodeURIComponent(city)}`);
+  return response.json();
+}
+
+// Function to fetch Currency Exchange data
+async function fetchCurrencyExchange() {
+  const response = await fetch(`/currency`);
   return response.json();
 }
 
@@ -64,8 +71,10 @@ document.getElementById('getWeatherButton').addEventListener('click', async () =
   try {
     const currentWeatherData = await fetchCurrentWeather(city);
     const forecastData = await fetchWeatherForecast(city);
-    if (currentWeatherData && forecastData) {
-      displayWeatherData(currentWeatherData, forecastData);
+    const exchangeRateData = await fetchCurrencyExchange();
+    if (currentWeatherData && forecastData && exchangeRateData) {
+      displayWeatherData(currentWeatherData, forecastData, exchangeRateData);
+      
       
       const lat = currentWeatherData.coord.lat;
       const lon = currentWeatherData.coord.lon;
@@ -76,7 +85,7 @@ document.getElementById('getWeatherButton').addEventListener('click', async () =
       alert('Error fetching current weather data');
     }
   } catch (error) {
-    console.error('Error:', error);
     alert('An error occurred while fetching the weather data');
+    console.error('Error:', error);
   }
 });

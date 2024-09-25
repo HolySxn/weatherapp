@@ -50,18 +50,16 @@ app.get('/weather-forecast', async (req, res) => {
     res.json(forecastData);
   } catch (error) {
     console.error('Error fetching weather history:', error);
-    res.status(500).json({ message: 'Failed to fetch weather history' });
+    res.status(500).json({ message: 'Failed to fetch forecast' });
   }
 });
 
 // Endpoint for excange 
 app.get('/currency', async (req, res) => {
-  const {base, target} = req.query;
-
   try {
-    const exchangeResponse = await fetch(`https://v6.exchangerate-api.com/v6/${currencyApi}/pair/${base}/${target}`)
+    const exchangeResponse = await fetch(`https://v6.exchangerate-api.com/v6/${currencyApi}/pair/USD/KZT`);
 
-    if (!exchangeData.ok) {
+    if (!exchangeResponse.ok) {
       throw new Error('Exchange data not found');
     }
 
