@@ -30,14 +30,14 @@ This application allows users to get real-time weather data for a specified city
    npm install
 
 3. Add your API keys:
-   weatherApiKey=your_openweather_api_key
-   forecastApi=your_visualcrossing_api_key
-   currencyApi=your_exchangerate_api_key
+      weatherApiKey=your_openweather_api_key
+      forecastApi=your_visualcrossing_api_key
+      currencyApi=your_exchangerate_api_key
 
-4. Start the server:
+5. Start the server:
    node server.js
 
-5. Open your browser and navigate to `http://localhost:3000`.
+6. Open your browser and navigate to `http://localhost:3000`.
 
 ## API Endpoints
 
