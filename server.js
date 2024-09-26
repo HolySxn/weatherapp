@@ -12,7 +12,8 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Replace with your actual OpenWeather API key
-const apiKey = 'a246adfad6eb2b9982af01d1934985c4';
+const weatherApiKey = 'a246adfad6eb2b9982af01d1934985c4';
+const forecastApi = 'DT3YS4BLUVZ9JDZUFJFRMQEW5'
 const currencyApi = '9df4503037adddb3bc85fddd'
 
 // Endpoint for current weather data
@@ -20,7 +21,7 @@ app.get('/weather', async (req, res) => {
   const { city } = req.query;
 
   try {
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric`);
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${weatherApiKey}&units=metric`);
     
     if (!response.ok) {
       throw new Error('Weather data not found');
@@ -40,7 +41,7 @@ app.get('/weather-forecast', async (req, res) => {
 
   try {
     // Replace with your actual weather history API call
-    const forecastResponse = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?key=DT3YS4BLUVZ9JDZUFJFRMQEW5`);
+    const forecastResponse = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?key=${forecastApi}`);
     
     if (!forecastResponse.ok) {
       throw new Error('Weather forecast not found');

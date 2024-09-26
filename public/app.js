@@ -47,9 +47,9 @@ async function fetchCurrentWeather(city) {
   return response.json();
 }
 
-// Function to fetch weather history data
+// Function to fetch weather forecast data
 async function fetchWeatherForecast(city) {
-  const response = await fetch(`/weather-forecast?city=${encodeURIComponent(city)}`);
+  const response = await fetch(`/weather-forecast?city=${city}`);
   return response.json();
 }
 
