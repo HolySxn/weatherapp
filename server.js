@@ -5,13 +5,11 @@ const path = require('path');
 const { default: axios } = require('axios');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 3000;
 
-// Middleware
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Replace with your actual OpenWeather API key
 const weatherApiKey = 'a246adfad6eb2b9982af01d1934985c4';
 const forecastApi = 'DT3YS4BLUVZ9JDZUFJFRMQEW5'
 const currencyApi = '9df4503037adddb3bc85fddd'
@@ -40,7 +38,6 @@ app.get('/weather-forecast', async (req, res) => {
   const { city } = req.query;
 
   try {
-    // Replace with your actual weather history API call
     const forecastResponse = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?key=${forecastApi}`);
     
     if (!forecastResponse.ok) {
